@@ -1,18 +1,29 @@
 package com.devVItor.WebServices.Model;
 
+import jakarta.persistence.*;
+import org.antlr.v4.runtime.misc.NotNull;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity
+@Table(name = "tb_user")
 public class User implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotNull
     private String nome;
 
+    @NotNull
     private String email;
 
+    @NotNull
     private String telefone;
 
+    @NotNull
     private String senha;
 
     public User() {
