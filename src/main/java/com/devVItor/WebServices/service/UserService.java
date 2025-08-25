@@ -20,4 +20,13 @@ public class UserService {
         Optional<User> u  = ur.findById(id);
         return u.get();
     }
+
+    public User create(User user) {
+        ur.save(user);
+        return user;
+    }
+
+    public void Update(User user) {ur.save(user);}
+
+    public void Delete(long Id) {ur.deleteById(Id);}
 }

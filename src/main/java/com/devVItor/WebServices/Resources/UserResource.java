@@ -4,10 +4,7 @@ import com.devVItor.WebServices.Model.User;
 import com.devVItor.WebServices.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,6 +31,35 @@ public class UserResource {
 
         return ResponseEntity.ok().body(obj);
     }
+
+
+    @PostMapping(value = "/create")
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+
+        User userCreated = us.create(user);
+
+        return ResponseEntity.ok().body(userCreated);
+    }
+
+    @PutMapping(value = "/update")
+    public ResponseEntity<String> updateUser(@RequestBody User user){
+
+        us.Update(user);
+
+        return ResponseEntity.ok().body("Usuario atualizado com sucesso! ");
+
+    }
+
+    @DeleteMapping(value = "/delete/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+
+        us.Delete(id);
+
+        return ResponseEntity.ok().body("DEU TUDO CERTO!");
+    }
+
+
+
 
 
 }

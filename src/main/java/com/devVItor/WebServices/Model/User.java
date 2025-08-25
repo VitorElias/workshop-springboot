@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import org.antlr.v4.runtime.misc.NotNull;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -25,6 +27,11 @@ public class User implements Serializable {
 
     @NotNull
     private String senha;
+
+    @NotNull
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Order> orders = new ArrayList<>();
+
 
     public User() {
     }
@@ -82,6 +89,15 @@ public class User implements Serializable {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public List<Order> getOrders() {return orders;}
+
+    public void AdicionarOrder(Order order) {
+        this.orders.add(order);
+    }
+    public void DeletarOrder(Order order) {
+        this.orders.remove(order);
     }
 
     @Override
