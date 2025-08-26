@@ -5,7 +5,9 @@ import com.devVItor.WebServices.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -38,15 +40,19 @@ public class UserResource {
 
         User userCreated = us.create(user);
 
-        return ResponseEntity.ok().body(userCreated);
+        URI iri = ServletUriComponentsBuilder.
+                fromCurrentRequest().
+                path("/{id}").
+                buildAndExpand(userCreated.getId()).
+                toUri();
+
+        return ResponseEntity.created(iri).body(userCreated);
     }
 
-    @PutMapping(value = "/update")
-    public ResponseEntity<String> updateUser(@RequestBody User user){
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Long id ,@RequestBody User user){
 
-        us.Update(user);
-
-        return ResponseEntity.ok().body("Usuario atualizado com sucesso! ");
+        return ResponseEntity.ok().body(us.Update(id,user));
 
     }
 
@@ -55,7 +61,7 @@ public class UserResource {
 
         us.Delete(id);
 
-        return ResponseEntity.ok().body("DEU TUDO CERTO!");
+        return ResponseEntity.noContent().build();
     }
 
 
