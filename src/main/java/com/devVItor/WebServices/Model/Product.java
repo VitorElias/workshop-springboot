@@ -1,5 +1,6 @@
 package com.devVItor.WebServices.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -25,6 +26,9 @@ public class Product {
     @ManyToMany
     @JoinTable(name = "tb_product_category",joinColumns = @JoinColumn(name ="Product_id"), inverseJoinColumns = @JoinColumn(name = "Category_id"))
     private Set<Category> categories = new HashSet<>();
+
+    @OneToMany(mappedBy = "id.product")
+    private Set<OrderItem> items = new HashSet<>();
 
     public Product(long id, String nome, String descricao, double preco, String imgUrl) {
         this.id = id;
@@ -94,6 +98,15 @@ public class Product {
 
     public void removerCategories(Category cat) {
         categories.remove(cat);
+    }
+
+    @JsonIgnore
+    public Set<Order> getOrders() {
+        Set<Order> set = new HashSet<>();
+        for(OrderItem x : items) {
+            set.add(x.getOrder());
+        }
+        return set;
     }
 
     @Override

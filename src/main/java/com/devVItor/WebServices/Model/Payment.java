@@ -18,7 +18,7 @@ public class Payment {
     private Instant date;
 
     @OneToOne
-    @JoinColumn(name = "payment_id", nullable= true, unique = true)
+    @MapsId
     private Order order;
 
     public Payment() {
@@ -28,9 +28,10 @@ public class Payment {
         this.date = date;
     }
 
-    public Payment(Long id, Instant date) {
+    public Payment(Long id, Instant date, Order order) {
         this.id = id;
         this.date = date;
+        this.order = order;
 
     }
 
