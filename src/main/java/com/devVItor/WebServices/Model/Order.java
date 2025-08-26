@@ -7,7 +7,9 @@ import jakarta.persistence.*;
 import org.antlr.v4.runtime.misc.NotNull;
 
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_order")
@@ -31,6 +33,9 @@ public class Order {
 
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
     private Payment pagamento;
+
+    @OneToMany(mappedBy = "id.order")
+    private Set<OrderItem> items = new HashSet<>();
 
     public Order() {
     }
@@ -99,6 +104,10 @@ public class Order {
 
     public void setPagamento(Payment pagamento) {
         this.pagamento = pagamento;
+    }
+
+    public Set<OrderItem> getItems() {
+        return items;
     }
 
     @Override

@@ -28,6 +28,9 @@ public class Category {
         this.nome = nome;
     }
 
+    public Category() {
+    }
+
     public Category(String nome) {
         this.nome = nome;
     }

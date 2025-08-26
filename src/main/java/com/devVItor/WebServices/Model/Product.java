@@ -18,7 +18,7 @@ public class Product {
 
     private String descricao;
 
-    private double preço;
+    private double preco;
 
     private String imgUrl;
 
@@ -26,19 +26,22 @@ public class Product {
     @JoinTable(name = "tb_product_category",joinColumns = @JoinColumn(name ="Product_id"), inverseJoinColumns = @JoinColumn(name = "Category_id"))
     private Set<Category> categories = new HashSet<>();
 
-    public Product(long id, String nome, String descricao, double preço, String imgUrl) {
+    public Product(long id, String nome, String descricao, double preco, String imgUrl) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
-        this.preço = preço;
+        this.preco = preco;
         this.imgUrl = imgUrl;
     }
 
-    public Product(String nome, String descricao, double preço, String imgUrl) {
+    public Product(String nome, String descricao, double preco, String imgUrl) {
         this.nome = nome;
         this.descricao = descricao;
-        this.preço = preço;
+        this.preco = preco;
         this.imgUrl = imgUrl;
+    }
+
+    public Product() {
     }
 
     public long getId() {
@@ -65,12 +68,12 @@ public class Product {
         this.descricao = descrição;
     }
 
-    public double getPreço() {
-        return preço;
+    public double getPreco() {
+        return preco;
     }
 
-    public void setPreço(double preço) {
-        this.preço = preço;
+    public void setPreco(double preco) {
+        this.preco = preco;
     }
 
     public String getImgUrl() {
@@ -110,7 +113,7 @@ public class Product {
                 "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", descrição='" + descricao + '\'' +
-                ", preço=" + preço +
+                ", preço=" + preco +
                 ", imgUrl='" + imgUrl + '\'' +
                 ", categories=" + categories +
                 '}';

@@ -1,18 +1,13 @@
 package com.devVItor.WebServices.config;
 
-import com.devVItor.WebServices.Model.Category;
+import com.devVItor.WebServices.Model.*;
 import com.devVItor.WebServices.Model.Enum.OrderStatus;
-import com.devVItor.WebServices.Model.Order;
-import com.devVItor.WebServices.Model.Product;
-import com.devVItor.WebServices.Model.User;
-import com.devVItor.WebServices.Repository.CategoryRepository;
-import com.devVItor.WebServices.Repository.OrderRepository;
-import com.devVItor.WebServices.Repository.ProductRepository;
-import com.devVItor.WebServices.Repository.UserRepository;
+import com.devVItor.WebServices.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.annotation.AccessType;
 
 import java.time.Instant;
 import java.util.Arrays;
@@ -32,6 +27,10 @@ public class testConfig implements CommandLineRunner {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private OrderItemRepository orderItemRepository;
+
 
 
     @Override
@@ -65,6 +64,13 @@ public class testConfig implements CommandLineRunner {
         categoryRepository.saveAll(Arrays.asList(cat1,cat2,cat3));
         orderRepository.saveAll(Arrays.asList(o1,o2,o3));
         productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
+
+        OrderItem oi1 = new OrderItem(2, p1.getPreco(),o1, p1);
+        OrderItem oi2 = new OrderItem(1, p3.getPreco(),o1, p3);
+        OrderItem oi3 = new OrderItem(2, p3.getPreco(),o2, p3);
+        OrderItem oi4 = new OrderItem(2, p5.getPreco(),o3, p5);
+
+        orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
 
 
     }
