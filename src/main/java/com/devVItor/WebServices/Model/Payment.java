@@ -1,5 +1,6 @@
 package com.devVItor.WebServices.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.antlr.v4.runtime.misc.NotNull;
 
@@ -17,6 +18,7 @@ public class Payment {
     @NotNull
     private Instant date;
 
+    @JsonIgnore
     @OneToOne
     @MapsId
     private Order order;

@@ -78,9 +78,7 @@ public class Order {
         return moment;
     }
 
-    public void setMoment(Instant moment) {
-        this.moment = moment;
-    }
+    public void setMoment(Instant moment) {this.moment = moment;}
 
     public OrderStatus getOrderStatus() {
         return OrderStatus.valueOf(this.orderStatus);
@@ -108,6 +106,15 @@ public class Order {
 
     public Set<OrderItem> getItems() {
         return items;
+    }
+
+    public double getTotal(){
+        double total = 0;
+
+        for(OrderItem item : items){
+            total += item.getSubTotal();
+        }
+        return total;
     }
 
     @Override
