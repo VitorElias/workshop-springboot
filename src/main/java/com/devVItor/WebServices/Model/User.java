@@ -1,5 +1,8 @@
 package com.devVItor.WebServices.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.antlr.v4.runtime.misc.NotNull;
 
@@ -28,8 +31,8 @@ public class User implements Serializable {
     @NotNull
     private String senha;
 
-    @NotNull
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
     private List<Order> orders = new ArrayList<>();
 
 

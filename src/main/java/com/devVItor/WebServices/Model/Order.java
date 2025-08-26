@@ -1,6 +1,8 @@
 package com.devVItor.WebServices.Model;
 
 import com.devVItor.WebServices.Model.Enum.OrderStatus;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.antlr.v4.runtime.misc.NotNull;
 
@@ -16,13 +18,15 @@ public class Order {
     private Long id;
 
     @NotNull
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'",timezone = "GMT")
     private Instant moment;
 
     @NotNull
-    private OrderStatus orderStatus;
+    private Integer orderStatus;
 
-    @NotNull
+    @ManyToOne
     @JoinColumn(name= "client_id")
+    @JsonManagedReference
     private User client;
 
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
@@ -34,21 +38,27 @@ public class Order {
     public Order(Long id, Instant moment, OrderStatus orderStatus, User client, Payment pagamento) {
         this.id = id;
         this.moment = moment;
-        this.orderStatus = orderStatus;
+        this.orderStatus = orderStatus.getCode();
         this.client = client;
         this.pagamento = pagamento;
     }
 
     public Order(Instant moment, OrderStatus orderStatus, User client, Payment pagamento) {
         this.moment = moment;
-        this.orderStatus = orderStatus;
+        this.orderStatus = orderStatus.getCode();
         this.client = client;
         this.pagamento = pagamento;
     }
 
     public Order(Instant moment, OrderStatus orderStatus) {
         this.moment = moment;
-        this.orderStatus = orderStatus;
+        this.orderStatus = orderStatus.getCode();
+    }
+
+    public Order(Instant moment, OrderStatus orderStatus, User client) {
+        this.moment = moment;
+        this.orderStatus = orderStatus.getCode();
+        this.client = client;
     }
 
     public Long getId() {
@@ -68,11 +78,11 @@ public class Order {
     }
 
     public OrderStatus getOrderStatus() {
-        return orderStatus;
+        return OrderStatus.valueOf(this.orderStatus);
     }
 
     public void setOrderStatus(OrderStatus orderStatus) {
-        this.orderStatus = orderStatus;
+        this.orderStatus = orderStatus.getCode();
     }
 
     public User getClient() {
